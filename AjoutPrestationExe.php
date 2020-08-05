@@ -11,23 +11,23 @@
 
 <body>
     <?php
-    include_once('nav.php');
-    ?>
+include_once 'nav.php';
+?>
     <br>
     <?php
-        include_once('connect.php');
-        $sql =  'SELECT MAX(NumPrestation) as NumPrestation FROM prestations';
-        $sth = $dbh->query($sql); 
-        $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
-        foreach ($result as $row){ 
-        $max = $row['NumPrestation'];
-        }
-        $max++;
-    $sql='Insert Into prestations Values ('.$max.',"'.$_POST['Nomtype'].'","'.$_POST['NomMat'].'","'.$_POST['Prix'].'")';
-    $sth = $dbh->query($sql);
-    $dbh=NULL;
-    echo '<meta http-equiv="refresh" content="0; URL=PrestationModif.php">'; 
-    ?>
+include_once 'Connect.php';
+$sql = 'SELECT MAX(NumPrestation) as NumPrestation FROM Prestations';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $row) {
+    $max = $row['NumPrestation'];
+}
+$max++;
+$sql = 'Insert Into Prestations Values (' . $max . ',"' . $_POST['Nomtype'] . '","' . $_POST['NomMat'] . '","' . $_POST['Prix'] . '")';
+$sth = $dbh->query($sql);
+$dbh = null;
+echo '<meta http-equiv="refresh" content="0; URL=PrestationModif.php">';
+?>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>

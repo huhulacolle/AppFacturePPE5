@@ -7,27 +7,34 @@
     <title>crosl</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/style.css">
-
+<link rel="stylesheet" href="style/style.css">
+    <script>
+  // This is an old version, for a more recent version look at
+  // https://jsfiddle.net/DRSDavidSoft/zb4ft1qq/2/
+  function maxLengthCheck(object) {
+      if (object.value.length > object.maxLength)
+          object.value = object.value.slice(0, object.maxLength)
+  }
+    </script>
 <body>
     <?php
-    include_once('nav.php');
-    ?>
-    <br>
+include_once 'nav.php';
+?>
+<br>
     <center>
         <h4> <strong> LIGUES </strong> </h4> <br>
     </center>
     <?php
-    include_once('connect.php');
-    $sql =  'SELECT MAX(NumLigue) as NumLigue FROM Ligue;';
-    $sth = $dbh->query($sql); 
-    $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
-    foreach ($result as $row){ 
+include_once 'Connect.php';
+$sql = 'SELECT MAX(NumLigue) as NumLigue FROM LIGUE;';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $row) {
     $max = $row['NumLigue'];
-    }
-    $max++;
-    echo '<div class="mx-auto" style="width: 1150px;">';
-    ?>
+}
+$max++;
+echo '<div class="mx-auto" style="width: 1150px;">';
+?>
     <h1 class="small">
         <Table class="table">
             <thead>
@@ -44,63 +51,99 @@
                 </tr>
             </thead>
             <?php
-include_once('Connect.php'); 
-$sql =  'SELECT * FROM LIGUE';
-$sth = $dbh->query($sql); 
-$result = $sth->fetchAll(PDO::FETCH_ASSOC); 
+$i = 0;
+include_once 'Connect.php';
+$sql = 'SELECT * FROM LIGUE';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     echo '<tbody>';
     echo '<tr>';
-          echo '<td>'; echo  $row['NumLigue']; echo '</td>';
-          echo '<td>'; echo  $row['NomSport']; echo '</td>';
-          echo '<td>'; echo $row['Nom']; echo '</td>';
-          echo '<td>'; echo $row['Addrs']; echo '</td>';
-          echo '<td>'; echo $row['Ville']; echo '</td>';
-          echo '<td>'; echo $row['CodPost']; echo '</td>';
-          echo '<td>'; echo $row['Sport']; echo '</td>'; 
-          echo '<td>';
-          echo '<form action="ModifLigue2.php" method="post">'; 
-          echo '<button type="submit" name="NumLigue" value="'.$row['NumLigue'].'" class="btn btn-primary mb-2">Modifier</button>';
-          echo '</form>';
-          echo '</td>';
-          echo '<td>';
-          echo '<form action="SuprLigueExe.php" method="post">'; 
-          echo '<button type="submit" name="NumLigue" value="'.$row['NumLigue'].'" class="btn btn-primary mb-2">Supprimer</button>';
-          echo '</form>';
-          echo '</td>';
+    $FinNomSport = explode(" ", $row['NomSport']);
+    $NomSport[$i] = end($FinNomSport);
+    echo '<form action="Modif.php" method="post">';
+    echo '<input type="hidden" name="choix" value="1">';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="text" class="form-control" name="NumLigue" value="' . $row['NumLigue'] . '" readonly>';
+    echo '</p>';
+    echo '</td>';
+    echo '<td>';
+    echo 'Ligue Loraine de';
+    echo '<input type="text" v-model="Sport" class="form-control" name="NomSport" id="NomSport" value="' . $NomSport[$i] . '">';
+    echo '</td>';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="text" class="form-control" name="Nom" value="' . $row['Nom'] . '" required>';
+    echo '</p>';
+    echo '</td>';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="text" class="form-control" name="Addrs" value="' . $row['Addrs'] . '" required>';
+    echo '</p>';
+    echo '</td>';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="text" class="form-control" name="Ville" value="' . $row['Ville'] . '" required>';
+    echo '</p>';
+    echo '</td>';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="number" class="form-control" name="CodPost" step="0.01" value="' . $row['CodPost'] . '" maxlength="5" required>';
+    echo '</p>';
+    echo '</td>';
+    echo '<td>';
+    echo '<p>';
+    echo '<input type="text" class="form-control" name="Sport" id="Sport" value="' . $row['Sport'] . '" onchange="updateInput(this.value)" required>';
+    echo '</p>';
+    echo '</td>';
+    $i++;
+    echo '<td>';
+    echo '<p>';
+    echo '<button type="submit" class="btn btn-primary mb-2">Modifier</button>';
+    echo '</p>';
+    echo '</form>';
+    echo '</td>';
+    echo '<td>';
+    echo '<form action="SuprLigueExe.php" method="post">';
+    echo '<p>';
+    echo '<button type="submit" name="NumLigue" value="' . $row['NumLigue'] . '" class="btn btn-primary mb-2">Supprimer</button>';
+    echo '</p>';
+    echo '</form>';
+    echo '</td>';
 }
-  
-$dbh=NULL; 
+
+$dbh = null;
 ?>
             <form action="AjoutLigueExe.php" method="post">
                 </tr>
                 <tr>
-                    <td>
+                    <td> <p>
                         <?php
-                echo $max;
-            ?>
-                    </td>
+echo '<input type="text" class="form-control" value="' . $max . '" readonly';
+?>
+                   </p> </td>
                     <form action="InsertLigueExe.php">
                         <td>
-                            Ligue Loraine de <input type="text" name="LigueSport">
+                         Ligue Loraine de <input type="text" class="form-control" name="LigueSport" required>
                         </td>
                         <td>
-                            <input type="text" name="Nom">
+                          <p> <input type="text" class="form-control" class="form-control" name="Nom" required> </p>
                         </td>
                         <td>
-                            <input type="text" name="Addrs">
+                            <p> <input type="text" class="form-control" name="Addrs" required> </p>
                         </td>
                         <td>
-                            <input type="text" name="Ville">
+                            <p> <input type="text" class="form-control" name="Ville" required> </p>
                         </td>
                         <td>
-                            <input type="number" name="CodPost">
+                            <p> <input type="number" oninput="maxLengthCheck(this)" maxlength="5" class="form-control" name="CodPost" required> </p>
                         </td>
                         <td>
-                            <input type="text" name="Sport">
+                            <p> <input type="text" class="form-control" name="Sport" required> </p>
                         </td>
                         <td colspan="2">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Ajouter</button>
+                              <button type="submit" class="btn btn-primary btn-lg btn-block">Ajouter</button>
                         </td>
                     </form>
                 </tr>
@@ -110,7 +153,6 @@ $dbh=NULL;
     </h1>
     </div>
     <br> <br> <br>
-
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>

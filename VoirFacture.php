@@ -11,35 +11,39 @@
 
 <body>
     <?php
-    include_once('nav.php');
-    ?>
+include_once 'nav.php';
+?>
     <br>
     <center>
         <h4> <strong> Facture </strong> </h4>
         <h7> Selectionner la facture à afficher </h7>
     </center> <br>
 
-    <div class="mx-auto" style="width: 500px;">
+    <div class="mx-auto" style="width: 600px;">
         <form action="VoirFactureExe.php" method="post">
             <Table class="table-borderess">
                 <tbody>
                     <?php
-        include_once('Connect.php'); 
-        $sql =  'SELECT idFacture, NomSport, DateDeb, DateEcheance FROM Ligue, Facture WHERE ligue.NumLigue = Facture.NumLigue;';
-        $sth = $dbh->query($sql); 
-        $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
-        if ($result == NULL) {
-            echo " <br> <h5> <center> Aucune facture n'a été créée </center> </h5>";
-        }
-        foreach ($result as $row) {
-            echo '<tr>'; 
-            echo '<td>'; echo 'Facture N°'; echo $row['idFacture'] ; echo '</td>';
-            echo '<td>';
-            echo '<button type="submit" name="idFacture" value="'.$row['idFacture'].'" class="btn btn-link">'.$row['NomSport'].' : '.$row['DateDeb'].' - '.$row['DateEcheance'].' </button>';
-            echo '</tr>';
-        }
-        $dbh=NULL;
-    ?>
+include_once 'Connect.php';
+$sql = 'SELECT idFacture, NomSport, DateDeb, DateEcheance FROM LIGUE, Facture WHERE LIGUE.NumLigue = Facture.NumLigue;';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+if ($result == null) {
+    echo " <br> <h5> <center> Aucune facture n'a été créée </center> </h5>";
+}
+foreach ($result as $row) {
+    echo '<tr>';
+    echo '<td>';
+    echo 'Facture N° FC ';
+    echo $row['idFacture'];
+    echo ' :';
+    echo '</td>';
+    echo '<td>';
+    echo '<center> <button type="submit" name="idFacture" value="' . $row['idFacture'] . '" class="btn btn-link">' . $row['NomSport'] . ' : ' . $row['DateDeb'] . ' - ' . $row['DateEcheance'] . ' </button> </center>';
+    echo '</tr>';
+}
+$dbh = null;
+?>
                 </tbody>
             </Table>
 

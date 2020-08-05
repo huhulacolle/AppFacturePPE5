@@ -11,24 +11,24 @@
 
 <body>
     <?php
-    include_once('nav.php');
-    ?>
+include_once 'nav.php';
+?>
     <br>
     <center>
         <h4> <strong> PRESTATIONS </strong> </h4> <br>
     </center>
     <?php
-    include_once('connect.php');
-    $sql =  'SELECT MAX(NumPrestation) as NumPrestation FROM prestations';
-    $sth = $dbh->query($sql); 
-    $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
-    foreach ($result as $row){ 
+include_once 'Connect.php';
+$sql = 'SELECT MAX(NumPrestation) as NumPrestation FROM Prestations';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $row) {
     $max = $row['NumPrestation'];
-    }
-    $max++;
-    echo '<br>';
-    echo '<div class="mx-auto" style="width: 1150px;">';
-    ?>
+}
+$max++;
+echo '<br>';
+echo '<div class="mx-auto" style="width: 1150px;">';
+?>
     <Table class="table">
         <thead>
             <tr>
@@ -41,48 +41,57 @@
             </tr>
         </thead>
         <?php
-include_once('Connect.php'); 
-$sql =  'SELECT * FROM prestations ORDER BY NumPrestation;';
-$sth = $dbh->query($sql); 
-$result = $sth->fetchAll(PDO::FETCH_ASSOC); 
+include_once 'Connect.php';
+$sql = 'SELECT * FROM Prestations ORDER BY NumPrestation;';
+$sth = $dbh->query($sql);
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     echo '<tbody>';
     echo '<tr>';
-          echo '<td>'; echo  $row['NumPrestation']; echo '</td>';
-          echo '<td>'; echo  $row['Nomtype']; echo '</td>';
-          echo '<td>'; echo $row['NomMat']; echo '</td>';
-          echo '<td>'; echo $row['Prix']; echo '</td>'; 
-          echo '<td>';
-          echo '<form action="ModifPrestation2.php" method="post">'; 
-          echo '<button type="submit" name="NumPrestation" value="'.$row['NumPrestation'].'" class="btn btn-primary mb-2">Modifier</button>';
-          echo '</form>';
-          echo '</td>';
-          echo '<td>';
-          echo '<form action="SuprPrestationExe.php" method="post">'; 
-          echo '<button type="submit" name="NumPrestation" value="'.$row['NumPrestation'].'" class="btn btn-primary mb-2">Supprimer</button>';
-          echo '</form>';
-          echo '</td>';
+    echo '<form action="Modif.php" method="post">';
+    echo '<input type="hidden" name="choix" value="2">';
+    echo '<td>';
+    echo '<input type="text" class="form-control" name="NumPrestation" value="' . $row['NumPrestation'] . '" readonly>';
+    echo '</td>';
+    echo '<td>';
+    echo '<input type="text" class="form-control" name="Nomtype" value="' . $row['Nomtype'] . '" required>';
+    echo '</td>';
+    echo '<td>';
+    echo '<input type="text" class="form-control" name="NomMat" value="' . $row['NomMat'] . '" required>';
+    echo '</td>';
+    echo '<td>';
+    echo '<input type="number" class="form-control" name="Prix" step="0.01" value="' . $row['Prix'] . '">';
+    echo '</td>';
+    echo '<td>';
+    echo '<button type="submit" class="btn btn-primary mb-2">Modifier</button>';
+    echo '</form>';
+    echo '</td>';
+    echo '<td>';
+    echo '<form action="SuprPrestationExe.php" method="post">';
+    echo '<button type="submit" name="NumPrestation" value="' . $row['NumPrestation'] . '" class="btn btn-primary mb-2">Supprimer</button>';
+    echo '</form>';
+    echo '</td>';
 }
-  
-$dbh=NULL; 
+
+$dbh = null;
 ?>
         <form action="AjoutPrestationExe.php" method="post">
             </tr>
             <tr>
                 <td>
                     <?php
-                echo $max;
-            ?>
+echo '<input type="test" class="form-control" value="' . $max . '" readonly';
+?>
                 </td>
                 <form action="InsertLigueExe.php">
                     <td>
-                        <input type="text" name="Nomtype">
+                        <input type="text" class="form-control" name="Nomtype" required>
                     </td>
                     <td>
-                        <input type="text" name="NomMat">
+                        <input type="text" class="form-control" name="NomMat" required>
                     </td>
                     <td>
-                        <input type="number" step="any" name="Prix">
+                        <input type="number" class="form-control" step="any" name="Prix">
                     </td>
                     <td colspan="2">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Ajouter</button>

@@ -11,16 +11,16 @@
 
 <body>
     <?php
-    include_once('nav.php');
-    ?>
+include_once 'nav.php';
+?>
     <br>
     <?php
-        include_once('connect.php');
-        $sql='DELETE FROM prestations WHERE NumPrestation = "'.$_POST['NumPrestation'].'"';
-        $sth = $dbh->query($sql);
-        $dbh=NULL; 
-      echo '<meta http-equiv="refresh" content="0; URL=PrestationModif.php">';
-    ?>
+include_once 'Connect.php';
+$sql = 'DELETE FROM Prestations WHERE NumPrestation = "' . $_POST['NumPrestation'] . '"';
+$sth = $dbh->query($sql);
+$dbh = null;
+echo '<meta http-equiv="refresh" content="0; URL=PrestationModif.php">';
+?>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>

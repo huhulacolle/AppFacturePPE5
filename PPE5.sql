@@ -1,4 +1,3 @@
-@@ -1,47 +0,0 @@
 Create Table LIGUE
 	( 
 	NumLigue integer(4),
@@ -37,7 +36,7 @@ Create Table ContenuFacture
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 	
-Insert Into LIGUE Values (411007,'Ligue Loraine Escrime','Valerie LAHEURTE','72 Avenue Millies Lacroix',' Echirolles','38130','Escrime');
+Insert Into LIGUE Values (411007,'Ligue Loraine de Escrime','Valerie LAHEURTE','72 Avenue Millies Lacroix',' Echirolles','38130','Escrime');
 Insert Into LIGUE Values (411008,'Ligue Loraine de Football','Pierre LENOIR','2 Chemin Des Bateliers','Annecy','74000','Football');
 Insert Into LIGUE Values (411009,'Ligue Loraine de Basket','Mohamed BOURGARD',"99 rue de l'Epeule",'Rouen','76100','Basket');
 Insert Into LIGUE Values (411010,'Ligue Loraine de Baby-Foot','Monsieur Sylvain Delahousse','66 rue de Penthievre','Privas','07000','Baby-Foot');

@@ -11,39 +11,24 @@
 
 <body>
     <?php
-    include_once('nav.php');
-    ?>
+include_once 'nav.php';
+?>
     <br>
     <?php
-    if ($_POST['LigueSport'] == NULL OR $_POST['Nom'] == NULL OR $_POST['Sport'] == NULL ) {
-        ?>
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="LigueModif.php">Retour</a>
-        </li>
-    </ul>
-    <br> <br> <br>
-    <center>
-        <h4> Erreur : vous avez oubliez de saisir au moins une valeur dans la tableau </h4>
-    </center>
-    <?php
-    }
-    else {
-        include_once('connect.php');
-    $sql =  'SELECT MAX(NumLigue) as NumLigue FROM Ligue;';
-    $sth = $dbh->query($sql); 
-    $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
-    foreach ($result as $row){ 
-    $max = $row['NumLigue'];
-}
-$max++;
-$sql='Insert Into Ligue Values ("'.$max.'","Ligue Loraine de '.$_POST['LigueSport'].'","'.$_POST['Nom'].'","'.$_POST['Addrs'].'","'.$_POST['Ville'].'","'.$_POST['CodPost'].'","'.$_POST['Sport'].'")';
+include_once 'Connect.php';
+$sql = 'SELECT MAX(NumLigue) as NumLigue FROM LIGUE;';
 $sth = $dbh->query($sql);
-$dbh=NULL; 
- 
-echo '<meta http-equiv="refresh" content="0; URL=LigueModif.php">';
-    }
-    ?>
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $row) {
+    $max = $row['NumLigue'];
+    $max++;
+    $sql = 'Insert Into LIGUE Values ("' . $max . '","Ligue Loraine de ' . $_POST['LigueSport'] . '","' . $_POST['Nom'] . '","' . $_POST['Addrs'] . '","' . $_POST['Ville'] . '","' . $_POST['CodPost'] . '","' . $_POST['Sport'] . '")';
+    $sth = $dbh->query($sql);
+    $dbh = null;
+
+    echo '<meta http-equiv="refresh" content="0; URL=LigueModif.php">';
+}
+?>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>

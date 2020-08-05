@@ -5,3 +5,15 @@
 .size {
   font-size: 10pt;
 }
+
+input[type="text"] {
+  font-size: 10pt
+}
+
+input[type="number"] {
+  font-size: 10pt
+}
+
+p {
+  padding-top: 12px;
+}
