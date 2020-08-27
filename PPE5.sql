@@ -1,5 +1,5 @@
-CREATE DATABASE crosl
-USE crosl
+CREATE DATABASE crosl;
+USE crosl;
 Create Table LIGUE
 	( 
 	NumLigue integer(4),
