@@ -29,10 +29,24 @@ if ($_POST['NumLigue'] == null) {
     <?php
 } else {
     include_once 'Connect.php';
-    $sql = 'DELETE FROM LIGUE WHERE NumLigue = ' . $_POST['NumLigue'] . '';
+    $sql = 'SELECT NumLigue FROM Facture';
     $sth = $dbh->query($sql);
-    $dbh = null;
-    echo '<meta http-equiv="refresh" content="0; URL=LigueModif.php">';
+    $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($result as $row) {
+        $NumLigue = $row['NumLigue'];
+    }
+    if ($_POST['NumLigue'] == $NumLigue) {
+        ?>
+        <script> alert('Impossible de supprimer cette colonne') </script>
+        <meta http-equiv="refresh" content="0; URL=LigueModif.php">
+        <?php
+    }
+    else {
+        $sql = 'DELETE FROM LIGUE WHERE NumLigue = ' . $_POST['NumLigue'] . '';
+        $sth = $dbh->query($sql);
+        $dbh = null;
+        echo '<meta http-equiv="refresh" content="0; URL=LigueModif.php">';
+    }
 }
 
 ?>
